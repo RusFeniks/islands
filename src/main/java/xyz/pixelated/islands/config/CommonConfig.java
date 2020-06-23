@@ -1,0 +1,90 @@
+package xyz.pixelated.islands.config;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.tuple.Pair;
+
+import net.minecraft.world.biome.Biomes;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
+import xyz.pixelated.islands.helpers.WyHelper;
+
+public class CommonConfig
+{
+	private static CommonConfig instance;
+
+	private IntValue islandRarity;
+	private IntValue islandMinSize;
+	private IntValue islandMaxSize;
+	private List<String> bannedBiomes;
+	
+	public static void init()
+	{
+		Pair<CommonConfig, ForgeConfigSpec> pair = new ForgeConfigSpec.Builder().configure(CommonConfig::new);
+		ForgeConfigSpec configSpec = pair.getRight();
+		CommonConfig.instance = pair.getLeft();
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, configSpec);
+	}
+	
+	public static CommonConfig instance()
+	{
+		return instance;
+	}
+
+	public CommonConfig(ForgeConfigSpec.Builder builder)
+	{
+		builder.push("Islands");
+		{
+			this.islandRarity = builder.comment("Determines how rare islands will generate; 10 by default").defineInRange("Rarity", 10, 5, 10000);
+			this.islandMinSize = builder.comment("The minimum size an island can be; 2 by default").defineInRange("Minimum Size", 2, 1, 10);
+			this.islandMaxSize = builder.comment("The maximum size an island can be; 5 by default").defineInRange("Maximum Size", 5, 1, 10);
+			
+			this.bannedBiomes = new ArrayList<String>();
+			Predicate<Object> bannedBiomesTest = new Predicate<Object>()
+			{
+				@Override
+				public boolean test(Object t)
+				{
+					if (!(t instanceof String))
+						return false;
+
+					String str = (String) t;
+					return !WyHelper.isNullOrEmpty(str);
+				}
+			};
+			this.bannedBiomes.add(Biomes.THE_END.getRegistryName().toString());
+			this.bannedBiomes.add(Biomes.END_BARRENS.getRegistryName().toString());
+			this.bannedBiomes.add(Biomes.END_HIGHLANDS.getRegistryName().toString());
+			this.bannedBiomes.add(Biomes.END_MIDLANDS.getRegistryName().toString());
+			this.bannedBiomes.add(Biomes.SMALL_END_ISLANDS.getRegistryName().toString());
+			this.bannedBiomes.add(Biomes.THE_END.getRegistryName().toString());
+			this.bannedBiomes.add(Biomes.NETHER.getRegistryName().toString());
+			builder.comment("List of banned biomes, formated as resource keys <mod>:<biome> if <mod> is left out the system will treat them as vanilla biomes").defineList("Banned Biomes", this.bannedBiomes, bannedBiomesTest);
+
+		}
+	}
+	
+	public List<String> getBannedBiomes()
+	{
+		return this.bannedBiomes;
+	}
+	
+	public int getIslandMaxSize()
+	{
+		return this.islandMaxSize.get();
+	}
+	
+	public int getIslandMinSize()
+	{
+		return this.islandMinSize.get();
+	}
+	
+	public int getIslandRarity()
+	{
+		return this.islandRarity.get();
+	}
+}

@@ -1,0 +1,28 @@
+modLoader="javafml"
+loaderVersion="[28,)"
+
+[[mods]]
+modId="islands"
+version="1.0.0"
+displayName="Islands"
+displayURL="https://www.pixelatedw.xyz/"
+logoFile="examplemod.png"
+authors="Wynd"
+description='''
+
+Dev Team :
+	Wynd - Progammer 
+'''
+
+[[dependencies.islands]]
+    modId="forge"
+    mandatory=true
+    versionRange="[28,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.islands]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.14.4]"
+    ordering="NONE"
+    side="BOTH"

@@ -20,16 +20,15 @@ import net.minecraft.world.storage.WorldInfo;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class IslandBiomeProvider extends BiomeProvider
-{
+{	
 	private final IslandArea genBiomes;
-
 	private final IslandArea biomeFactoryLayer;
 
 	public IslandBiomeProvider(OverworldBiomeProviderSettings settingsProvider)
 	{
 		WorldInfo worldinfo = settingsProvider.getWorldInfo();
 		OverworldGenSettings overworldgensettings = settingsProvider.getGeneratorSettings();
-		IslandArea[] area = IslandLayerProvider.buildArchipelagoProcedure(worldinfo.getSeed(), worldinfo.getGenerator(), overworldgensettings);
+		IslandArea[] area = IslandLayerProvider.build(worldinfo.getSeed(), worldinfo.getGenerator(), overworldgensettings);
 		this.genBiomes = area[0];
 		this.biomeFactoryLayer = area[1];
 	}

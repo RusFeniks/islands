@@ -21,7 +21,7 @@ import xyz.pixelated.islands.layers.OneBiomePerIslandLayer;
 
 public class IslandLayerProvider
 {
-	public static <T extends IArea, C extends IExtendedNoiseRandom<T>> ImmutableList<IAreaFactory<T>> buildArchipelagoProcedure(WorldType worldTypeIn, OverworldGenSettings settings, LongFunction<C> randomProvider)
+	public static <T extends IArea, C extends IExtendedNoiseRandom<T>> ImmutableList<IAreaFactory<T>> setup(WorldType worldTypeIn, OverworldGenSettings settings, LongFunction<C> randomProvider)
 	{
 		IAreaFactory<T> islandFactory = IslandMasterLayer.INSTANCE.apply((IExtendedNoiseRandom) randomProvider.apply(1000L));
 		islandFactory = OneBiomePerIslandLayer.INSTANCE.apply((IExtendedNoiseRandom) randomProvider.apply(9L), islandFactory);
@@ -37,9 +37,9 @@ public class IslandLayerProvider
 		return ImmutableList.of(islandFactory, iareafactory5);
 	}
 
-	public static IslandArea[] buildArchipelagoProcedure(long seed, WorldType typeIn, OverworldGenSettings settings)
+	public static IslandArea[] build(long seed, WorldType typeIn, OverworldGenSettings settings)
 	{
-		ImmutableList<IAreaFactory<LazyArea>> immutablelist = buildArchipelagoProcedure(typeIn, settings, p_215737_2_ -> new LazyAreaLayerContext(25, seed, p_215737_2_));
+		ImmutableList<IAreaFactory<LazyArea>> immutablelist = setup(typeIn, settings, p_215737_2_ -> new LazyAreaLayerContext(25, seed, p_215737_2_));
 		IslandArea layer = new IslandArea(immutablelist.get(0));
 		IslandArea layer1 = new IslandArea(immutablelist.get(1));
 		return new IslandArea[] { layer, layer1 };

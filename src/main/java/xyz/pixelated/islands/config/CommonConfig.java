@@ -8,6 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
@@ -21,6 +22,7 @@ public class CommonConfig
 	private IntValue islandMinSize;
 	private IntValue islandMaxSize;
 	private List<String> bannedBiomes;
+	private BooleanValue survivalIsland;
 	
 	public static void init()
 	{
@@ -39,10 +41,11 @@ public class CommonConfig
 	{
 		builder.push("Islands");
 		{
-			this.islandRarity = builder.comment("Determines how rare islands will generate; 10 by default").defineInRange("Rarity", 10, 5, 10000);
-			this.islandMinSize = builder.comment("The minimum size an island can be; 2 by default").defineInRange("Minimum Size", 2, 1, 10);
-			this.islandMaxSize = builder.comment("The maximum size an island can be; 5 by default").defineInRange("Maximum Size", 5, 1, 10);
-			
+			this.islandRarity = builder.comment("Determines how rare islands will generate \n10 by default").defineInRange("Rarity", 10, 5, 10000);
+			this.islandMinSize = builder.comment("The minimum size an island can be \n2 by default").defineInRange("Minimum Size", 2, 1, 10);
+			this.islandMaxSize = builder.comment("The maximum size an island can be \n5 by default").defineInRange("Maximum Size", 5, 1, 10);
+			this.survivalIsland = builder.comment("Determines if the spawn island is the only island spawned in the world \nfalse by default").define("Survival Island", false);
+
 			this.bannedBiomes = new ArrayList<String>();
 			Predicate<Object> bannedBiomesTest = new Predicate<Object>()
 			{
@@ -66,6 +69,11 @@ public class CommonConfig
 			builder.comment("List of banned biomes, formated as resource keys <mod>:<biome> if <mod> is left out the system will treat them as vanilla biomes").defineList("Banned Biomes", this.bannedBiomes, bannedBiomesTest);
 
 		}
+	}
+	
+	public boolean isSurvivalIsland()
+	{
+		return this.survivalIsland.get();
 	}
 	
 	public List<String> getBannedBiomes()

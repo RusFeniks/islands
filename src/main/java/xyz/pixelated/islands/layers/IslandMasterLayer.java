@@ -25,6 +25,8 @@ public enum IslandMasterLayer implements IAreaTransformer0
 	{
 		if (genX == 0 && genZ == 0)
 			return ((ForgeRegistry<Biome>) ForgeRegistries.BIOMES).getID(Biomes.FOREST);
+		if (CommonConfig.instance().isSurvivalIsland())
+		      return IslandsHelper.getBiomeId(Biomes.DEEP_OCEAN); 
 		return (rand.random(this.islandRarity) == 1) ? IslandsHelper.getRandomBiome(rand) : IslandsHelper.getBiomeId(Biomes.DEEP_OCEAN);
 	}
 }

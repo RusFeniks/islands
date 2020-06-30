@@ -1,6 +1,5 @@
 package xyz.pixelated.islands;
 
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.provider.OverworldBiomeProviderSettings;
@@ -20,7 +19,7 @@ public class IslandWorldType extends WorldType
 	public ChunkGenerator<?> createChunkGenerator(World world)
 	{
 		if (world.dimension.getType() == DimensionType.OVERWORLD)
-			return new OverworldChunkGenerator((IWorld) world, new IslandBiomeProvider((new OverworldBiomeProviderSettings()).setWorldInfo(world.getWorldInfo())), new OverworldGenSettings());
+			return new OverworldChunkGenerator(world, new IslandBiomeProvider((new OverworldBiomeProviderSettings()).setWorldInfo(world.getWorldInfo())), new OverworldGenSettings());
 		return super.createChunkGenerator(world);
 	}
 }

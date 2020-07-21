@@ -5,8 +5,8 @@ loaderVersion="[28,)"
 modId="islands"
 version="1.0.0"
 displayName="Islands"
-displayURL="https://www.pixelatedw.xyz/"
-logoFile="examplemod.png"
+displayURL="https://www.pixelatedw.xyz/islands"
+logoFile="logo.png"
 authors="Wynd"
 description='''
 Simple mod that adds a new World Type for generating and endless ocean filled with islands.

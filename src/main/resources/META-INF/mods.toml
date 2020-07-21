@@ -9,9 +9,10 @@ displayURL="https://www.pixelatedw.xyz/"
 logoFile="examplemod.png"
 authors="Wynd"
 description='''
+Simple mod that adds a new World Type for generating and endless ocean filled with islands.
 
 Dev Team :
-	Wynd - Progammer 
+    Wynd - Progammer 
 '''
 
 [[dependencies.islands]]

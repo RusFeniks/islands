@@ -16,7 +16,7 @@ A simple minecraft mod that adds a new World Type generating an endless ocean fi
 
 ## How to Install
 1. Download and install MinecraftForge from their [official website](https://files.minecraftforge.net/)
-	* This Mod is made using 1.14.4 - 28.2.21, so using that version or something higher than it is recommended
+	* This Mod is made using 1.15.2 - 31.2.28, so using that version or something higher than it is recommended
 2. Download the Mod from either our [official website](https://pixelatedw.xyz/islands/downloads), or the [curse page](https://www.curseforge.com/minecraft/mc-mods/islands)
 3. Create a new "mods" folder, if not already present, inside your ".minecraft" folder
     * On Windows the ".minecraft" folder can be found by pressing Windows Key + R and running the %appdata% command

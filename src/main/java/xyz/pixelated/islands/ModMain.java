@@ -12,6 +12,6 @@ public class ModMain
 
 	public ModMain()
 	{
-		CommonConfig.init();
+		CommonConfig.init();	
 	}
 }

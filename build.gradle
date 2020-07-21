@@ -26,6 +26,7 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 
 minecraft
 {
+<<<<<<< HEAD
     mappings channel: 'snapshot', version: '20200630-1.15.1'
 
     runs 

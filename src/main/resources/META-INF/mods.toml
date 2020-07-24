@@ -18,7 +18,7 @@ Dev Team :
 [[dependencies.islands]]
     modId="forge"
     mandatory=true
-    versionRange="[28,)"
+    versionRange="[31.2,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.islands]]

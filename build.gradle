@@ -17,9 +17,9 @@ apply plugin: 'eclipse'
 
 def commits = 'git rev-list --count HEAD'.execute().in.text.trim()
 def shortHash = 'git rev-parse --short HEAD'.execute().in.text.trim()
-version = " ${mc_version} - ${mod_version} - ${version_type}.${shortHash}.${commits}"
+version = "${mc_version}-${mod_version}-${shortHash}.${commits}"
 group= "${package_group}"
-archivesBaseName = "${mod_name} "
+archivesBaseName = "${mod_name}"
 
 compileJava.options.encoding = 'UTF-8'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'

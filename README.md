@@ -10,7 +10,7 @@ A simple minecraft mod that adds a new World Type generating an endless ocean fi
 
 * For Multiplayer:
     1. Open the server.properties file found in the same folder as your server
-    2. Add `use-modded-worldtype=islands` at the end of the file
+    2. Replace `level-type=default` with `level-type=islands`
     3. Save it
     4. Make sure the server doesn't already have a world generated, **this only works when first generating the server's world!**
 
@@ -27,7 +27,7 @@ A simple minecraft mod that adds a new World Type generating an endless ocean fi
 6. Enjoy
 
 ## Support
-* Donations via [Paypal](shorturl.at/cfhHR) or [Patreon](https://www.patreon.com/wynd) help us keep the servers going
+* Donations via [Paypal](https://bit.ly/2PZgf0Q) or [Patreon](https://www.patreon.com/wynd) help us keep the servers going
 * Help us localize the mod in your language, make sure nobody already thought about doing that first
 * Report bugs when you encounter them in a **clear** and **concise** way
 * Join the [discord server](http://discord.gg/CYK9xs8), helping newcomers, chatting or just sharing dank memes
@@ -36,7 +36,7 @@ A simple minecraft mod that adds a new World Type generating an endless ocean fi
 ## Development
 1. Clone the repository
     ```http
-    https://github.com/PixelatedW/islands
+    git clone https://github.com/PixelatedW/islands
     ```
 
 2. Run one of the following command, in order to setup forge and generate the .launch files

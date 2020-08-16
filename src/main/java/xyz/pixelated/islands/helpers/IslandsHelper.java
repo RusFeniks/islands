@@ -52,8 +52,6 @@ public class IslandsHelper
 		List<String> bannedBiomes = CommonConfig.instance().getBannedOceanBiomes();
 		Predicate<Biome> ignorePredicate = (biome) -> !bannedBiomes.contains(biome.getRegistryName().toString());
 		Predicate<Biome> oceanPredicate = (biome) -> biome.getCategory() == Category.OCEAN;
-
-		System.out.println(bannedBiomes);
 		
 		List<Biome> list = new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(ignorePredicate).filter(oceanPredicate).collect(Collectors.toList());
 		if(list.size() == 0)

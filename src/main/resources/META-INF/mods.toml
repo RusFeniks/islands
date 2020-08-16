@@ -3,7 +3,7 @@ loaderVersion="[28,)"
 
 [[mods]]
 modId="islands"
-version="1.0.0"
+version="1.1.0"
 displayName="Islands"
 displayURL="https://www.pixelatedw.xyz/islands"
 logoFile="logo.png"

@@ -1,11 +1,14 @@
 package xyz.pixelated.islands.helpers;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.INoiseRandom;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -25,12 +28,36 @@ public class IslandsHelper
 		return false;
 	}
 
-	public static int getRandomBiome(INoiseRandom rand)
+	public static Set<Biome> getBiomeSet()
 	{
-		List<String> bannedBiomes = CommonConfig.instance().getBannedBiomes();
+		Set<Biome> set = new HashSet<>();
+		ForgeRegistries.BIOMES.forEach(set::add);
+		return set;
+	}
+
+	public static int getRandomIslandBiome(INoiseRandom rand)
+	{
+		List<String> bannedBiomes = CommonConfig.instance().getBannedIslandsBiomes();
 		Predicate<Biome> ignorePredicate = (biome) -> !bannedBiomes.contains(biome.getRegistryName().toString());
 
 		List<Biome> list = new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(ignorePredicate).collect(Collectors.toList());
+		if(list.size() == 0)
+			return getBiomeId(Biomes.FOREST);
+		Biome biome = list.get(rand.random(list.size()));
+		return getBiomeId(biome);
+	}
+	
+	public static int getRandomOceanBiome(INoiseRandom rand)
+	{
+		List<String> bannedBiomes = CommonConfig.instance().getBannedOceanBiomes();
+		Predicate<Biome> ignorePredicate = (biome) -> !bannedBiomes.contains(biome.getRegistryName().toString());
+		Predicate<Biome> oceanPredicate = (biome) -> biome.getCategory() == Category.OCEAN;
+
+		System.out.println(bannedBiomes);
+		
+		List<Biome> list = new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(ignorePredicate).filter(oceanPredicate).collect(Collectors.toList());
+		if(list.size() == 0)
+			return getBiomeId(Biomes.DEEP_OCEAN);
 		Biome biome = list.get(rand.random(list.size()));
 		return getBiomeId(biome);
 	}

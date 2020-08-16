@@ -20,6 +20,7 @@ public class IslandWorldType extends WorldType
 	{
 		if (world.dimension.getType() == DimensionType.OVERWORLD)
 			return new OverworldChunkGenerator(world, new IslandBiomeProvider((new OverworldBiomeProviderSettings()).setWorldInfo(world.getWorldInfo())), new OverworldGenSettings());
+
 		return super.createChunkGenerator(world);
 	}
 }

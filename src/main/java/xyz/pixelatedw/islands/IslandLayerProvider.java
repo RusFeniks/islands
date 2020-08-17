@@ -1,4 +1,4 @@
-package xyz.pixelated.islands;
+package xyz.pixelatedw.islands;
 
 import java.util.function.LongFunction;
 
@@ -9,10 +9,10 @@ import net.minecraft.world.gen.area.IAreaFactory;
 import net.minecraft.world.gen.layer.Layer;
 import net.minecraft.world.gen.layer.ShoreLayer;
 import net.minecraft.world.gen.layer.ZoomLayer;
-import xyz.pixelated.islands.config.CommonConfig;
-import xyz.pixelated.islands.helpers.WyHelper;
-import xyz.pixelated.islands.layers.IslandMasterLayer;
-import xyz.pixelated.islands.layers.OneBiomePerIslandLayer;
+import xyz.pixelatedw.islands.config.CommonConfig;
+import xyz.pixelatedw.islands.helpers.WyHelper;
+import xyz.pixelatedw.islands.layers.IslandMasterLayer;
+import xyz.pixelatedw.islands.layers.OneBiomePerIslandLayer;
 
 public class IslandLayerProvider
 {

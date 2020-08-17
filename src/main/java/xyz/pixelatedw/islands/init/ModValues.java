@@ -1,4 +1,4 @@
-package xyz.pixelated.islands.init;
+package xyz.pixelatedw.islands.init;
 
 public class ModValues
 {

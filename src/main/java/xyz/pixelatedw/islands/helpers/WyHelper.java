@@ -1,4 +1,4 @@
-package xyz.pixelated.islands.helpers;
+package xyz.pixelatedw.islands.helpers;
 
 import java.util.Random;
 

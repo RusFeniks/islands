@@ -1,9 +1,9 @@
-package xyz.pixelated.islands;
+package xyz.pixelatedw.islands;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.gen.layer.Layer;
-import xyz.pixelated.islands.helpers.IslandsHelper;
+import xyz.pixelatedw.islands.helpers.IslandsHelper;
 
 public class IslandBiomeProvider extends BiomeProvider
 {	

@@ -1,4 +1,4 @@
-package xyz.pixelated.islands;
+package xyz.pixelatedw.islands;
 
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;

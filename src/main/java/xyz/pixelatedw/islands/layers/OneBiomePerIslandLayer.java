@@ -1,8 +1,8 @@
-package xyz.pixelated.islands.layers;
+package xyz.pixelatedw.islands.layers;
 
 import net.minecraft.world.gen.INoiseRandom;
 import net.minecraft.world.gen.layer.traits.ICastleTransformer;
-import xyz.pixelated.islands.helpers.IslandsHelper;
+import xyz.pixelatedw.islands.helpers.IslandsHelper;
 
 public enum OneBiomePerIslandLayer implements ICastleTransformer
 {

@@ -1,4 +1,4 @@
-package xyz.pixelated.islands;
+package xyz.pixelatedw.islands;
 
 import java.util.Collections;
 import java.util.List;

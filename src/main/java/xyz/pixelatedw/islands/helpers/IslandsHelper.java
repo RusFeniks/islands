@@ -1,4 +1,4 @@
-package xyz.pixelated.islands.helpers;
+package xyz.pixelatedw.islands.helpers;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,7 +13,7 @@ import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.INoiseRandom;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
-import xyz.pixelated.islands.config.CommonConfig;
+import xyz.pixelatedw.islands.config.CommonConfig;
 
 public class IslandsHelper
 {	
@@ -52,8 +52,6 @@ public class IslandsHelper
 		List<String> bannedBiomes = CommonConfig.instance().getBannedOceanBiomes();
 		Predicate<Biome> ignorePredicate = (biome) -> !bannedBiomes.contains(biome.getRegistryName().toString());
 		Predicate<Biome> oceanPredicate = (biome) -> biome.getCategory() == Category.OCEAN;
-
-		System.out.println(bannedBiomes);
 		
 		List<Biome> list = new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(ignorePredicate).filter(oceanPredicate).collect(Collectors.toList());
 		if(list.size() == 0)

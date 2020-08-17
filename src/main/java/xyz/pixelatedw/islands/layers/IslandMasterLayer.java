@@ -1,4 +1,4 @@
-package xyz.pixelated.islands.layers;
+package xyz.pixelatedw.islands.layers;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
@@ -6,8 +6,8 @@ import net.minecraft.world.gen.INoiseRandom;
 import net.minecraft.world.gen.layer.traits.IAreaTransformer0;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
-import xyz.pixelated.islands.config.CommonConfig;
-import xyz.pixelated.islands.helpers.IslandsHelper;
+import xyz.pixelatedw.islands.config.CommonConfig;
+import xyz.pixelatedw.islands.helpers.IslandsHelper;
 
 public enum IslandMasterLayer implements IAreaTransformer0
 {

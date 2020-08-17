@@ -1,12 +1,12 @@
-package xyz.pixelated.islands;
+package xyz.pixelatedw.islands;
 
 import net.minecraft.server.dedicated.ServerProperties;
 import net.minecraft.world.WorldType;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import xyz.pixelated.islands.config.CommonConfig;
-import xyz.pixelated.islands.init.ModValues;
+import xyz.pixelatedw.islands.config.CommonConfig;
+import xyz.pixelatedw.islands.init.ModValues;
 
 @Mod(ModValues.PROJECT_ID)
 public class ModMain

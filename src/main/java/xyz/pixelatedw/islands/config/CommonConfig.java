@@ -1,4 +1,4 @@
-package xyz.pixelated.islands.config;
+package xyz.pixelatedw.islands.config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
-import xyz.pixelated.islands.helpers.WyHelper;
+import xyz.pixelatedw.islands.helpers.WyHelper;
 
 public class CommonConfig
 {

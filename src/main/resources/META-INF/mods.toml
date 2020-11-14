@@ -1,5 +1,6 @@
 modLoader="javafml"
-loaderVersion="[28,)"
+loaderVersion="[35,)"
+license="GNU General Public License v3.0"
 
 [[mods]]
 modId="islands"
@@ -18,12 +19,13 @@ Dev Team :
 [[dependencies.islands]]
     modId="forge"
     mandatory=true
-    versionRange="[31.2,)"
+    versionRange="[35.0,)"
     ordering="NONE"
     side="BOTH"
+    
 [[dependencies.islands]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.15.2]"
+    versionRange="[1.16.4]"
     ordering="NONE"
     side="BOTH"

@@ -68,7 +68,11 @@ public class CommonConfig
 			defaultBanListIslands.add(Biomes.END_MIDLANDS.getRegistryName().toString());
 			defaultBanListIslands.add(Biomes.SMALL_END_ISLANDS.getRegistryName().toString());
 			defaultBanListIslands.add(Biomes.THE_END.getRegistryName().toString());
-			defaultBanListIslands.add(Biomes.NETHER.getRegistryName().toString());
+			defaultBanListIslands.add(Biomes.NETHER_WASTES.getRegistryName().toString());
+			defaultBanListIslands.add(Biomes.SOUL_SAND_VALLEY.getRegistryName().toString());
+			defaultBanListIslands.add(Biomes.CRIMSON_FOREST.getRegistryName().toString());
+			defaultBanListIslands.add(Biomes.WARPED_FOREST.getRegistryName().toString());
+			defaultBanListIslands.add(Biomes.BASALT_DELTAS.getRegistryName().toString());
 			this.bannedBiomes = builder.comment("List of banned biomes used for island generation, formated as resource keys <mod>:<biome> if <mod> is left out the system will treat them as vanilla biomes\nNote: If all the biomes are removed the Forest biome will be used as a default for all islands!").defineList("Banned Island Biomes", defaultBanListIslands, ALLOWED_STRING_PREDICATE);
 			
 			ArrayList defaultBanListOceans = new ArrayList<String>();

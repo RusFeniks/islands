@@ -3,10 +3,12 @@ package xyz.pixelatedw.islands;
 import net.minecraftforge.common.world.ForgeWorldType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.pixelatedw.islands.config.CommonConfig;
+import xyz.pixelatedw.islands.helpers.IslandsHelper;
 import xyz.pixelatedw.islands.init.ModValues;
 
 @Mod(ModValues.PROJECT_ID)
@@ -25,7 +27,14 @@ public class ModMain
 		WORLD_TYPES.register("islands", () -> ISLANDS_TYPE);
 		WORLD_TYPES.register(modEventBus);
 		
+		modEventBus.addListener(this::onLoadComplete);
+		
 		//FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerWorldTypeScreenFactories);
+	}
+	
+	private void onLoadComplete(FMLLoadCompleteEvent event)
+	{
+		new IslandsHelper();
 	}
 
 	/*

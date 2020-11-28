@@ -19,7 +19,22 @@ import net.minecraftforge.registries.ForgeRegistry;
 import xyz.pixelatedw.islands.config.CommonConfig;
 
 public class IslandsHelper
-{	
+{
+	private static List<Biome> islandBiomesList = new ArrayList<Biome>();
+	private static List<Biome> oceanBiomesList = new ArrayList<Biome>();
+
+	public IslandsHelper()
+	{
+		List<String> bannedIslandBiomes = CommonConfig.instance().getBannedIslandsBiomes();	
+		Predicate<Biome> islandsIgnorePredicate = (biome) -> !bannedIslandBiomes.contains(biome.getRegistryName().toString());
+		islandBiomesList = new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(islandsIgnorePredicate).collect(Collectors.toList());
+		
+		List<String> bannedOceanBiomes = CommonConfig.instance().getBannedOceanBiomes();
+		Predicate<Biome> isOceanPredicate = (biome) -> biome.getCategory() == Category.OCEAN;
+		Predicate<Biome> oceanIgnorePredicate = (biome) -> !bannedOceanBiomes.contains(biome.getRegistryName().toString());
+		oceanBiomesList = new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(oceanIgnorePredicate).filter(isOceanPredicate).collect(Collectors.toList());
+	}
+	
 	public static boolean isOcean(int biomeId)
 	{
 		for (Biome biome : ForgeRegistries.BIOMES.getValues())
@@ -40,26 +55,17 @@ public class IslandsHelper
 
 	public static int getRandomIslandBiome(INoiseRandom rand)
 	{
-		List<String> bannedBiomes = CommonConfig.instance().getBannedIslandsBiomes();
-		Predicate<Biome> ignorePredicate = (biome) -> !bannedBiomes.contains(biome.getRegistryName().toString());
-
-		List<Biome> list = new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(ignorePredicate).collect(Collectors.toList());
-		if(list.size() == 0)
+		if(islandBiomesList.size() == 0)
 			return getBiomeId(Biomes.FOREST);
-		Biome biome = list.get(rand.random(list.size()));
+		Biome biome = islandBiomesList.get(rand.random(islandBiomesList.size()));
 		return getBiomeId(biome);
 	}
 	
 	public static int getRandomOceanBiome(INoiseRandom rand)
 	{
-		List<String> bannedBiomes = CommonConfig.instance().getBannedOceanBiomes();
-		Predicate<Biome> ignorePredicate = (biome) -> !bannedBiomes.contains(biome.getRegistryName().toString());
-		Predicate<Biome> oceanPredicate = (biome) -> biome.getCategory() == Category.OCEAN;
-		
-		List<Biome> list = new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(ignorePredicate).filter(oceanPredicate).collect(Collectors.toList());
-		if(list.size() == 0)
+		if(oceanBiomesList.size() == 0)
 			return getBiomeId(Biomes.DEEP_OCEAN);
-		Biome biome = list.get(rand.random(list.size()));
+		Biome biome = oceanBiomesList.get(rand.random(oceanBiomesList.size()));
 		return getBiomeId(biome);
 	}
 

@@ -1,20 +1,25 @@
 package xyz.pixelatedw.islands;
 
-/*
-public class IslandWorldType extends WorldType
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.DimensionSettings;
+import net.minecraft.world.gen.NoiseChunkGenerator;
+import net.minecraftforge.common.world.ForgeWorldType;
+
+public class IslandWorldType extends ForgeWorldType
 {
 	public IslandWorldType()
 	{
-		super("islands");
+		super(new Factory());
 	}
 
-	@Override
-	public ChunkGenerator<?> createChunkGenerator(World world)
+	private static class Factory implements IBasicChunkGeneratorFactory
 	{
-		if(world.getDimension().getType() == DimensionType.OVERWORLD)
-		    return ChunkGeneratorType.SURFACE.create(world, new IslandBiomeProvider(world.getSeed()), new OverworldGenSettings());
-
-		return super.createChunkGenerator(world);
+		@Override
+		public ChunkGenerator createChunkGenerator(Registry<Biome> biomeRegistry, Registry<DimensionSettings> dimensionSettingsRegistry, long seed)
+		{
+			return new NoiseChunkGenerator(new IslandBiomeProvider(seed, biomeRegistry), seed, () -> { return dimensionSettingsRegistry.getOrThrow(DimensionSettings.field_242734_c); });
+		}	
 	}
 }
-*/

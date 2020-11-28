@@ -77,7 +77,7 @@ minecraft
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
-dependencies 
+dependencies
 {
-	minecraft 'net.minecraftforge:forge:1.16.4-35.0.14'
+	minecraft 'net.minecraftforge:forge:1.16.4-35.1.6'
 }

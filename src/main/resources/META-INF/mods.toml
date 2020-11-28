@@ -19,7 +19,7 @@ Dev Team :
 [[dependencies.islands]]
     modId="forge"
     mandatory=true
-    versionRange="[35.0,)"
+    versionRange="[35.1.6,)"
     ordering="NONE"
     side="BOTH"
     

@@ -20,19 +20,27 @@ import xyz.pixelatedw.islands.config.CommonConfig;
 
 public class IslandsHelper
 {
-	private static List<Biome> islandBiomesList = new ArrayList<Biome>();
-	private static List<Biome> oceanBiomesList = new ArrayList<Biome>();
+	private static WeightedList<Biome> islandBiomesList = new WeightedList<Biome>();
+	private static WeightedList<Biome> oceanBiomesList = new WeightedList<Biome>();
 
 	public IslandsHelper()
 	{
 		List<String> bannedIslandBiomes = CommonConfig.instance().getBannedIslandsBiomes();	
 		Predicate<Biome> islandsIgnorePredicate = (biome) -> !bannedIslandBiomes.contains(biome.getRegistryName().toString());
-		islandBiomesList = new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(islandsIgnorePredicate).collect(Collectors.toList());
+		for(Biome biome : new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(islandsIgnorePredicate).collect(Collectors.toList()))
+		{
+			double weight = CommonConfig.instance().getIslandBiomeWeight(biome.getRegistryName());
+			islandBiomesList.addEntry(biome, weight);
+		}	
 		
 		List<String> bannedOceanBiomes = CommonConfig.instance().getBannedOceanBiomes();
 		Predicate<Biome> isOceanPredicate = (biome) -> biome.getCategory() == Category.OCEAN;
 		Predicate<Biome> oceanIgnorePredicate = (biome) -> !bannedOceanBiomes.contains(biome.getRegistryName().toString());
-		oceanBiomesList = new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(oceanIgnorePredicate).filter(isOceanPredicate).collect(Collectors.toList());
+		for(Biome biome : new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(oceanIgnorePredicate).filter(isOceanPredicate).collect(Collectors.toList()))
+		{
+			double weight = CommonConfig.instance().getOceanBiomeWeight(biome.getRegistryName());
+			oceanBiomesList.addEntry(biome, weight);
+		}
 	}
 	
 	public static boolean isOcean(int biomeId)
@@ -57,7 +65,7 @@ public class IslandsHelper
 	{
 		if(islandBiomesList.size() == 0)
 			return getBiomeId(Biomes.FOREST);
-		Biome biome = islandBiomesList.get(rand.random(islandBiomesList.size()));
+		Biome biome = islandBiomesList.getRandom();
 		return getBiomeId(biome);
 	}
 	
@@ -65,7 +73,7 @@ public class IslandsHelper
 	{
 		if(oceanBiomesList.size() == 0)
 			return getBiomeId(Biomes.DEEP_OCEAN);
-		Biome biome = oceanBiomesList.get(rand.random(oceanBiomesList.size()));
+		Biome biome = oceanBiomesList.getRandom();
 		return getBiomeId(biome);
 	}
 

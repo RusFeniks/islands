@@ -16,7 +16,30 @@ import net.minecraftforge.registries.ForgeRegistry;
 import xyz.pixelatedw.islands.config.CommonConfig;
 
 public class IslandsHelper
-{	
+{
+	private static WeightedList<Biome> islandBiomesList = new WeightedList<Biome>();
+	private static WeightedList<Biome> oceanBiomesList = new WeightedList<Biome>();
+
+	public IslandsHelper()
+	{
+		List<String> bannedIslandBiomes = CommonConfig.instance().getBannedIslandsBiomes();	
+		Predicate<Biome> islandsIgnorePredicate = (biome) -> !bannedIslandBiomes.contains(biome.getRegistryName().toString());
+		for(Biome biome : new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(islandsIgnorePredicate).collect(Collectors.toList()))
+		{
+			double weight = CommonConfig.instance().getIslandBiomeWeight(biome.getRegistryName());
+			islandBiomesList.addEntry(biome, weight);
+		}	
+		
+		List<String> bannedOceanBiomes = CommonConfig.instance().getBannedOceanBiomes();
+		Predicate<Biome> isOceanPredicate = (biome) -> biome.getCategory() == Category.OCEAN;
+		Predicate<Biome> oceanIgnorePredicate = (biome) -> !bannedOceanBiomes.contains(biome.getRegistryName().toString());
+		for(Biome biome : new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(oceanIgnorePredicate).filter(isOceanPredicate).collect(Collectors.toList()))
+		{
+			double weight = CommonConfig.instance().getOceanBiomeWeight(biome.getRegistryName());
+			oceanBiomesList.addEntry(biome, weight);
+		}
+	}
+	
 	public static boolean isOcean(int biomeId)
 	{
 		for (Biome biome : ForgeRegistries.BIOMES.getValues())
@@ -37,26 +60,17 @@ public class IslandsHelper
 
 	public static int getRandomIslandBiome(INoiseRandom rand)
 	{
-		List<String> bannedBiomes = CommonConfig.instance().getBannedIslandsBiomes();
-		Predicate<Biome> ignorePredicate = (biome) -> !bannedBiomes.contains(biome.getRegistryName().toString());
-
-		List<Biome> list = new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(ignorePredicate).collect(Collectors.toList());
-		if(list.size() == 0)
+		if(islandBiomesList.size() == 0)
 			return getBiomeId(Biomes.FOREST);
-		Biome biome = list.get(rand.random(list.size()));
+		Biome biome = islandBiomesList.getRandom();
 		return getBiomeId(biome);
 	}
-	
+
 	public static int getRandomOceanBiome(INoiseRandom rand)
 	{
-		List<String> bannedBiomes = CommonConfig.instance().getBannedOceanBiomes();
-		Predicate<Biome> ignorePredicate = (biome) -> !bannedBiomes.contains(biome.getRegistryName().toString());
-		Predicate<Biome> oceanPredicate = (biome) -> biome.getCategory() == Category.OCEAN;
-		
-		List<Biome> list = new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(ignorePredicate).filter(oceanPredicate).collect(Collectors.toList());
-		if(list.size() == 0)
+		if(oceanBiomesList.size() == 0)
 			return getBiomeId(Biomes.DEEP_OCEAN);
-		Biome biome = list.get(rand.random(list.size()));
+		Biome biome = oceanBiomesList.getRandom();
 		return getBiomeId(biome);
 	}
 
@@ -72,7 +86,7 @@ public class IslandsHelper
 			if (getBiomeId(biome) == biomeId)
 				return biome;
 		}
-		
+
 		return Biomes.DEEP_OCEAN;
 	}
 }

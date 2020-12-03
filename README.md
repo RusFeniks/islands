@@ -46,7 +46,7 @@ A simple minecraft mod that adds a new World Type generating an endless ocean fi
     ```
     * For IntelliJ:
     ```bash
-    ./gradlew intellij genIntellijRuns
+    ./gradlew idea genIntellijRuns
     ```
 
 3. Open your IDE and Import the project

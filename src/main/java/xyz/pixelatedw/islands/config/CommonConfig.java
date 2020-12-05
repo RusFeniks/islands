@@ -61,7 +61,7 @@ public class CommonConfig
 	{
 		builder.push("Islands");
 		{
-			this.islandRarity = builder.comment("Determines how rare islands will generate \n10 by default").defineInRange("Rarity", 10, 5, 10000);
+			this.islandRarity = builder.comment("Determines how rare islands will generate \nLower numbers means the islands will be more common!\n10 by default").defineInRange("Rarity", 10, 2, 10000);
 			this.islandMinSize = builder.comment("The minimum size an island can be \n2 by default").defineInRange("Minimum Size", 2, 1, 10);
 			this.islandMaxSize = builder.comment("The maximum size an island can be \n5 by default").defineInRange("Maximum Size", 5, 1, 10);
 			this.survivalIsland = builder.comment("Determines if the spawn island is the only island spawned in the world \nfalse by default").define("Survival Island", false);

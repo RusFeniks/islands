@@ -2,10 +2,14 @@ package xyz.pixelatedw.islands;
 
 import net.minecraft.server.dedicated.ServerProperties;
 import net.minecraft.world.WorldType;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import xyz.pixelatedw.islands.config.CommonConfig;
+import xyz.pixelatedw.islands.helpers.IslandsHelper;
 import xyz.pixelatedw.islands.init.ModValues;
 
 @Mod(ModValues.PROJECT_ID)
@@ -16,7 +20,15 @@ public class ModMain
 
 	public ModMain()
 	{
-		CommonConfig.init();		
+		CommonConfig.init();
+		
+		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		modEventBus.addListener(this::onLoadComplete);
+	}
+	
+	private void onLoadComplete(FMLLoadCompleteEvent event)
+	{
+		new IslandsHelper();
 	}
 	
 	@SubscribeEvent

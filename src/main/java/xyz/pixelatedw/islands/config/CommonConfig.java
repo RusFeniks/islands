@@ -1,18 +1,15 @@
 package xyz.pixelatedw.islands.config;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.function.Predicate;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
@@ -28,8 +25,6 @@ public class CommonConfig
 	private ConfigValue<List<? extends String>> bannedBiomes;
 	private ConfigValue<List<? extends String>> bannedOceans;
 	private BooleanValue survivalIsland;
-	private HashMap<ResourceLocation, DoubleValue> islandBiomesWeight;
-	private HashMap<ResourceLocation, DoubleValue> oceanBiomesWeight;
 	
 	private	static final Predicate<Object> ALLOWED_STRING_PREDICATE = new Predicate<Object>()
 	{
@@ -79,35 +74,7 @@ public class CommonConfig
 			
 			ArrayList defaultBanListOceans = new ArrayList<String>();
 			this.bannedOceans = builder.comment("List of banned biomes used for ocean generation, formated as resource keys <mod>:<biome> if <mod> is left out the system will treat them as vanilla biomes\nNote 1: While any biome can be added here if the biome is not an ocean it will have no effect on the ocean generation!\nNote 2: If all oceans are removed then the Deep Ocean biome will be used as a default!").defineList("Banned Ocean Biomes", defaultBanListOceans, ALLOWED_STRING_PREDICATE);
-		
-			builder.comment("If a biome is not included here it has a default weight of 1!").push("Island Biomes Weight");
-			{
-				this.islandBiomesWeight = new HashMap<ResourceLocation, DoubleValue>();
-				this.islandBiomesWeight.put(Biomes.FOREST.getRegistryName(), builder.defineInRange(Biomes.FOREST.getRegistryName().toString(), 1, 0.1, 100));
-			}
-			builder.pop();
-			
-			builder.comment("If a biome is not included here it has a default weight of 1!").push("Ocean Biomes Weight");
-			{
-				this.oceanBiomesWeight = new HashMap<ResourceLocation, DoubleValue>();
-				this.oceanBiomesWeight.put(Biomes.OCEAN.getRegistryName(), builder.defineInRange(Biomes.OCEAN.getRegistryName().toString(), 1, 0.1, 100));
-			}
-			builder.pop();
 		}
-	}
-	
-	public double getOceanBiomeWeight(ResourceLocation key)
-	{
-		if(this.oceanBiomesWeight.containsKey(key))
-			this.oceanBiomesWeight.get(key).get();
-		return 1;	
-	}
-	
-	public double getIslandBiomeWeight(ResourceLocation key)
-	{
-		if(this.islandBiomesWeight.containsKey(key))
-			this.islandBiomesWeight.get(key).get();
-		return 1;	
 	}
 	
 	public List<String> getBannedOceanBiomes()

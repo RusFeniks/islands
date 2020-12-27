@@ -9,6 +9,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import xyz.pixelatedw.islands.config.CommonConfig;
+import xyz.pixelatedw.islands.config.IslandsWeightConfig;
+import xyz.pixelatedw.islands.config.OceansWeightConfig;
 import xyz.pixelatedw.islands.helpers.IslandsHelper;
 import xyz.pixelatedw.islands.init.ModValues;
 
@@ -21,6 +23,8 @@ public class ModMain
 	public ModMain()
 	{
 		CommonConfig.init();
+		IslandsWeightConfig.init();
+		OceansWeightConfig.init();
 		
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modEventBus.addListener(this::onLoadComplete);

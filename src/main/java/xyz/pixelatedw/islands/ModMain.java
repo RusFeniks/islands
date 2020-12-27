@@ -8,6 +8,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.pixelatedw.islands.config.CommonConfig;
+import xyz.pixelatedw.islands.config.IslandsWeightConfig;
+import xyz.pixelatedw.islands.config.OceansWeightConfig;
 import xyz.pixelatedw.islands.helpers.IslandsHelper;
 import xyz.pixelatedw.islands.init.ModValues;
 
@@ -21,7 +23,9 @@ public class ModMain
 	public ModMain()
 	{		
 		CommonConfig.init();
-		
+		IslandsWeightConfig.init();
+		OceansWeightConfig.init();
+
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		
 		WORLD_TYPES.register("islands", () -> ISLANDS_TYPE);

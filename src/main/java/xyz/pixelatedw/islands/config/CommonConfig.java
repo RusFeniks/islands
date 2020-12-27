@@ -6,6 +6,8 @@ import java.util.function.Predicate;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
@@ -13,6 +15,7 @@ import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.registries.ForgeRegistries;
 import xyz.pixelatedw.islands.helpers.WyHelper;
 
 public class CommonConfig
@@ -25,6 +28,8 @@ public class CommonConfig
 	private ConfigValue<List<? extends String>> bannedBiomes;
 	private ConfigValue<List<? extends String>> bannedOceans;
 	private BooleanValue survivalIsland;
+	private BooleanValue hasStartingBiome;
+	private ConfigValue<String> startingBiome;
 	
 	private	static final Predicate<Object> ALLOWED_STRING_PREDICATE = new Predicate<Object>()
 	{
@@ -60,7 +65,9 @@ public class CommonConfig
 			this.islandMinSize = builder.comment("The minimum size an island can be \n2 by default").defineInRange("Minimum Size", 2, 1, 10);
 			this.islandMaxSize = builder.comment("The maximum size an island can be \n5 by default").defineInRange("Maximum Size", 5, 1, 10);
 			this.survivalIsland = builder.comment("Determines if the spawn island is the only island spawned in the world \nfalse by default").define("Survival Island", false);
-
+			this.hasStartingBiome = builder.comment("Determines if the starting biome (spawn island) is always the same or if its randomly chosen\nfalse by default").define("Has Starting Biome", false);
+			this.startingBiome = builder.comment("Defines the starting biome (spawn island), only works if the 'Has Starting Biome' is set to true\nminecraft:forest by default").define("Starting Biome", "minecraft:forest");
+			
 			ArrayList defaultBanListIslands = new ArrayList<String>();
 			defaultBanListIslands.add(Biomes.THE_END.getRegistryName().toString());
 			defaultBanListIslands.add(Biomes.END_BARRENS.getRegistryName().toString());
@@ -75,6 +82,17 @@ public class CommonConfig
 			ArrayList defaultBanListOceans = new ArrayList<String>();
 			this.bannedOceans = builder.comment("List of banned biomes used for ocean generation, formated as resource keys <mod>:<biome> if <mod> is left out the system will treat them as vanilla biomes\nNote 1: While any biome can be added here if the biome is not an ocean it will have no effect on the ocean generation!\nNote 2: If all oceans are removed then the Deep Ocean biome will be used as a default!").defineList("Banned Ocean Biomes", defaultBanListOceans, ALLOWED_STRING_PREDICATE);
 		}
+	}
+	
+	public Biome getStartingBiome()
+	{
+		ResourceLocation res = new ResourceLocation(this.startingBiome.get());
+		return ForgeRegistries.BIOMES.getValue(res);
+	}
+	
+	public boolean hasStartingBiome()
+	{
+		return this.hasStartingBiome.get();
 	}
 	
 	public List<String> getBannedOceanBiomes()

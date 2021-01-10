@@ -95,15 +95,15 @@ public class IslandBiomeProvider extends BiomeProvider
 	@Override
 	public boolean hasStructure(Structure<?> structureIn)
 	{
-		return this.hasStructureCache.computeIfAbsent(structureIn, p_205006_1_ ->
+		return this.hasStructureCache.computeIfAbsent(structureIn, structure ->
 		{
 			for (Biome biome : ForgeRegistries.BIOMES.getValues())
 			{
-				if (biome.hasStructure(p_205006_1_))
-					return Boolean.valueOf(true);
+				if (biome.hasStructure(structure))
+					return true;
 			}
-			return Boolean.valueOf(false);
-		}).booleanValue();
+			return false;
+		});
 	}
 
 	@Override

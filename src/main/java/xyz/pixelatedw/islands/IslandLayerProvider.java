@@ -21,7 +21,7 @@ import xyz.pixelatedw.islands.layers.OneBiomePerIslandLayer;
 
 public class IslandLayerProvider
 {
-	public static <T extends IArea, C extends IExtendedNoiseRandom<T>> ImmutableList<IAreaFactory<T>> setup(WorldType worldTypeIn, OverworldGenSettings settings, LongFunction<C> randomProvider)
+	public static <T extends IArea, C extends IExtendedNoiseRandom<T>> ImmutableList<IAreaFactory<T>> setup(WorldType worldType, OverworldGenSettings settings, LongFunction<C> randomProvider)
 	{
 		IAreaFactory<T> islandFactory = IslandMasterLayer.INSTANCE.apply((IExtendedNoiseRandom) randomProvider.apply(1000L));
 		islandFactory = OneBiomePerIslandLayer.INSTANCE.apply((IExtendedNoiseRandom) randomProvider.apply(9L), islandFactory);
@@ -29,7 +29,7 @@ public class IslandLayerProvider
 		int max = CommonConfig.instance().getIslandMaxSize();
 		int size = (int) WyHelper.randomWithRange(min, max);
 		for (int islandSize = 0; islandSize <= size; islandSize++)
-			islandFactory = ZoomLayer.NORMAL.apply((IExtendedNoiseRandom) randomProvider.apply(1000L + islandSize), islandFactory);
+			islandFactory = ZoomLayer.NORMAL.apply((IExtendedNoiseRandom) randomProvider.apply(1000L), islandFactory);
 		islandFactory = ShoreLayer.INSTANCE.apply((IExtendedNoiseRandom) randomProvider.apply(10L), islandFactory);
 		islandFactory = ZoomLayer.FUZZY.apply((IExtendedNoiseRandom) randomProvider.apply(1000L), islandFactory);
 		islandFactory = ZoomLayer.NORMAL.apply((IExtendedNoiseRandom) randomProvider.apply(1000L), islandFactory);
@@ -37,9 +37,9 @@ public class IslandLayerProvider
 		return ImmutableList.of(islandFactory, iareafactory5);
 	}
 
-	public static IslandArea[] build(long seed, WorldType typeIn, OverworldGenSettings settings)
+	public static IslandArea[] build(long seed, WorldType type, OverworldGenSettings settings)
 	{
-		ImmutableList<IAreaFactory<LazyArea>> immutablelist = setup(typeIn, settings, p_215737_2_ -> new LazyAreaLayerContext(25, seed, p_215737_2_));
+		ImmutableList<IAreaFactory<LazyArea>> immutablelist = setup(type, settings, (modifier) -> new LazyAreaLayerContext(25, seed, modifier));
 		IslandArea layer = new IslandArea(immutablelist.get(0));
 		IslandArea layer1 = new IslandArea(immutablelist.get(1));
 		return new IslandArea[] { layer, layer1 };

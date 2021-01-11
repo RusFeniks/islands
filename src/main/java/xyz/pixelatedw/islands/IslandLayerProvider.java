@@ -11,7 +11,6 @@ import net.minecraft.world.gen.OverworldGenSettings;
 import net.minecraft.world.gen.area.IArea;
 import net.minecraft.world.gen.area.IAreaFactory;
 import net.minecraft.world.gen.area.LazyArea;
-import net.minecraft.world.gen.layer.ShoreLayer;
 import net.minecraft.world.gen.layer.VoroniZoomLayer;
 import net.minecraft.world.gen.layer.ZoomLayer;
 import xyz.pixelatedw.islands.config.CommonConfig;

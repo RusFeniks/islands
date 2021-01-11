@@ -26,9 +26,9 @@ public class IslandBiomeProvider extends BiomeProvider
 
 	public IslandBiomeProvider(OverworldBiomeProviderSettings settingsProvider)
 	{
-		WorldInfo worldinfo = settingsProvider.getWorldInfo();
-		OverworldGenSettings overworldgensettings = settingsProvider.getGeneratorSettings();
-		IslandArea[] area = IslandLayerProvider.build(worldinfo.getSeed(), worldinfo.getGenerator(), overworldgensettings);
+		WorldInfo worldinfo = settingsProvider.getWorldInfo();	
+		OverworldGenSettings settings = settingsProvider.getGeneratorSettings();
+		IslandArea[] area = IslandLayerProvider.build(worldinfo.getSeed(), worldinfo.getGenerator(), settings);
 		this.genBiomes = area[0];
 		this.biomeFactoryLayer = area[1];
 	}

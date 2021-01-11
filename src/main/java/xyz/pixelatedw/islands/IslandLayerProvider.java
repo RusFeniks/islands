@@ -17,6 +17,7 @@ import net.minecraft.world.gen.layer.ZoomLayer;
 import xyz.pixelatedw.islands.config.CommonConfig;
 import xyz.pixelatedw.islands.helpers.WyHelper;
 import xyz.pixelatedw.islands.layers.IslandMasterLayer;
+import xyz.pixelatedw.islands.layers.IslandShoreLayer;
 import xyz.pixelatedw.islands.layers.OneBiomePerIslandLayer;
 
 public class IslandLayerProvider
@@ -30,7 +31,7 @@ public class IslandLayerProvider
 		int size = (int) WyHelper.randomWithRange(min, max);
 		for (int islandSize = 0; islandSize <= size; islandSize++)
 			islandFactory = ZoomLayer.NORMAL.apply((IExtendedNoiseRandom) randomProvider.apply(1000L), islandFactory);
-		islandFactory = ShoreLayer.INSTANCE.apply((IExtendedNoiseRandom) randomProvider.apply(10L), islandFactory);
+		islandFactory = IslandShoreLayer.INSTANCE.apply((IExtendedNoiseRandom) randomProvider.apply(10L), islandFactory);
 		islandFactory = ZoomLayer.FUZZY.apply((IExtendedNoiseRandom) randomProvider.apply(1000L), islandFactory);
 		islandFactory = ZoomLayer.NORMAL.apply((IExtendedNoiseRandom) randomProvider.apply(1000L), islandFactory);
 		IAreaFactory<T> iareafactory5 = VoroniZoomLayer.INSTANCE.apply((IExtendedNoiseRandom) randomProvider.apply(1000L), islandFactory);

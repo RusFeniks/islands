@@ -2,7 +2,8 @@ package xyz.pixelatedw.islands.helpers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
+import net.minecraft.world.gen.INoiseRandom;
 
 public class WeightedList<T extends Object>
 {
@@ -14,8 +15,7 @@ public class WeightedList<T extends Object>
 
 	private List<Entry> entries = new ArrayList<>();
 	private double totalWeight;
-	private Random rand = new Random();
-
+	
 	public void addEntry(T object, double weight)
 	{
 		this.totalWeight += weight;
@@ -25,10 +25,11 @@ public class WeightedList<T extends Object>
 		this.entries.add(entry);
 	}
 
-	public T getRandom()
+	public T getRandom(INoiseRandom rand)
 	{
-		double r = this.rand.nextDouble() * this.totalWeight;
-
+		double i = rand.random(this.entries.size()) / (double)this.entries.size();
+		double r = i * this.totalWeight;
+		
 		for (Entry entry : this.entries)
 		{
 			if (entry.weight >= r)
@@ -36,6 +37,7 @@ public class WeightedList<T extends Object>
 				return entry.object;
 			}
 		}
+
 		return null;
 	}
 	

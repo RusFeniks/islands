@@ -17,8 +17,7 @@ import net.minecraft.world.gen.INoiseRandom;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
 import xyz.pixelatedw.islands.config.CommonConfig;
-import xyz.pixelatedw.islands.config.IslandsWeightConfig;
-import xyz.pixelatedw.islands.config.OceansWeightConfig;
+import xyz.pixelatedw.islands.config.WeightConfig;
 
 public class IslandsHelper
 {
@@ -32,7 +31,7 @@ public class IslandsHelper
 		Predicate<Biome> islandsIgnorePredicate = (biome) -> !bannedIslandBiomes.contains(biome.getRegistryName().toString());
 		for(Biome biome : new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(islandsIgnorePredicate).filter(isNotOceanPredicate).collect(Collectors.toList()))
 		{
-			double weight = IslandsWeightConfig.instance().getIslandBiomeWeight(biome.getRegistryName());
+			double weight = WeightConfig.instance().getIslandBiomeWeight(biome.getRegistryName());
 			islandBiomesList.addEntry(biome, weight);
 		}	
 		
@@ -41,7 +40,7 @@ public class IslandsHelper
 		Predicate<Biome> oceanIgnorePredicate = (biome) -> !bannedOceanBiomes.contains(biome.getRegistryName().toString());
 		for(Biome biome : new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(oceanIgnorePredicate).filter(isOceanPredicate).collect(Collectors.toList()))
 		{
-			double weight = OceansWeightConfig.instance().getOceanBiomeWeight(biome.getRegistryName());
+			double weight = WeightConfig.instance().getOceanBiomeWeight(biome.getRegistryName());
 			oceanBiomesList.addEntry(biome, weight);
 		}
 	}
@@ -68,7 +67,7 @@ public class IslandsHelper
 	{
 		if(islandBiomesList.size() == 0)
 			return getBiomeId(Biomes.FOREST);
-		Biome biome = islandBiomesList.getRandom();
+		Biome biome = islandBiomesList.getRandom(rand);
 		return getBiomeId(biome);
 	}
 	
@@ -76,7 +75,7 @@ public class IslandsHelper
 	{
 		if(oceanBiomesList.size() == 0)
 			return getBiomeId(Biomes.DEEP_OCEAN);
-		Biome biome = oceanBiomesList.getRandom();
+		Biome biome = oceanBiomesList.getRandom(rand);
 		return getBiomeId(biome);
 	}
 

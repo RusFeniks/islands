@@ -48,7 +48,7 @@ public class WeightConfig
 			ArrayList<Biome> list = (ArrayList<Biome>) new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(isNotOceanPredicate).collect(Collectors.toList());
 			for(Biome biome : list)
 			{
-				this.islandBiomesWeight.put(biome.getRegistryName(), builder.defineInRange(biome.getRegistryName().toString(), 50, 1, 100));
+				this.islandBiomesWeight.put(biome.getRegistryName(), builder.defineInRange(biome.getRegistryName().toString(), 5, 1, 10));
 			}
 		}
 		builder.pop();
@@ -63,7 +63,7 @@ public class WeightConfig
 			ArrayList<Biome> list = (ArrayList<Biome>) new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(isOceanPredicate).collect(Collectors.toList());
 			for(Biome biome : list)
 			{
-				this.oceanBiomesWeight.put(biome.getRegistryName(), builder.defineInRange(biome.getRegistryName().toString(), 50, 1, 100));
+				this.oceanBiomesWeight.put(biome.getRegistryName(), builder.defineInRange(biome.getRegistryName().toString(), 5, 1, 10));
 			}			
 		}
 		builder.pop();
@@ -73,13 +73,13 @@ public class WeightConfig
 	{
 		if(this.islandBiomesWeight.containsKey(key))
 			return this.islandBiomesWeight.get(key).get();
-		return 1;
+		return 5;
 	}
 	
 	public int getOceanBiomeWeight(ResourceLocation key)
 	{
 		if(this.oceanBiomesWeight.containsKey(key))
 			return this.oceanBiomesWeight.get(key).get();
-		return 1;	
+		return 5;	
 	}
 }

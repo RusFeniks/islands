@@ -38,7 +38,7 @@ public class WeightConfig
 
 	public WeightConfig(ForgeConfigSpec.Builder builder)
 	{
-		builder.comment("List of biomes and their weights, by default everything is set to 50 with a range of 1 - 100 as decimals."
+		builder.comment("List of biomes and their weights, by default everything is set to 5 with a range of 1 - 10 as integers."
 			+ "\nThe list will also display modded biomes however it will not remove them once said mod is removed! The line(s) for the mod's biomes will not have any effect however"
 			+ "\n\nTIP: Use CTRL+F (Find) to easily find the biome you're looking for")
 		.push("Island Biomes Weights");
@@ -53,7 +53,7 @@ public class WeightConfig
 		}
 		builder.pop();
 		
-		builder.comment("List of biomes and their weights, by default everything is set to 50 with a range of 1 - 100 as decimals."
+		builder.comment("List of biomes and their weights, by default everything is set to 5 with a range of 1 - 10 as integers."
 			+ "\nThe list will also display modded biomes however it will not remove them once said mod is removed! The line(s) for the mod's biomes will not have any effect however"
 			+ "\nTIP: Use CTRL+F (Find) to easily find the biome you're looking for")
 		.push("Ocean Biomes Weights");

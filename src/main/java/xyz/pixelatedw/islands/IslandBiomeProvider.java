@@ -13,31 +13,31 @@ import xyz.pixelatedw.islands.helpers.IslandsHelper;
 public class IslandBiomeProvider extends BiomeProvider
 {
 	private Layer biomeLayer;
-	private Registry<Biome> lookupRegistry;
+	private Registry<Biome> biomes;
 	public static final Codec<IslandBiomeProvider> CODEC = RecordCodecBuilder.create((builder) ->
 	{
 		return builder.group(Codec.LONG.fieldOf("seed").stable().forGetter((provider) ->
 		{
 			return provider.seed;
-		}), RegistryLookupCodec.getLookUpCodec(Registry.BIOME_KEY).forGetter((overworldProvider) ->
+		}), RegistryLookupCodec.getLookUpCodec(Registry.BIOME_KEY).forGetter((provider) ->
 		{
-			return overworldProvider.lookupRegistry;
+			return provider.biomes;
 		})).apply(builder, builder.stable(IslandBiomeProvider::new));
 	});
 	private final long seed;
 
-	public IslandBiomeProvider(long seed, Registry<Biome> lookupRegistry)
+	public IslandBiomeProvider(long seed, Registry<Biome> biomes)
 	{
 		super(IslandsHelper.getBiomeSet());
 		this.seed = seed;
+		this.biomes = biomes;
 		this.biomeLayer = IslandLayerProvider.build(seed);
-		this.lookupRegistry = lookupRegistry;
 	}
 
 	@Override
 	public Biome getNoiseBiome(int x, int y, int z)
 	{
-		return this.biomeLayer.func_242936_a(this.lookupRegistry, x, z);
+		return this.biomeLayer.func_242936_a(this.biomes, x, z);
 	}
 
 	@Override
@@ -49,6 +49,6 @@ public class IslandBiomeProvider extends BiomeProvider
 	@Override
 	public BiomeProvider getBiomeProvider(long seed)
 	{
-		return new IslandBiomeProvider(seed, this.lookupRegistry);
+		return new IslandBiomeProvider(seed, this.biomes);
 	}
 }

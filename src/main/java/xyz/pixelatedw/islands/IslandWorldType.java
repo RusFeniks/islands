@@ -1,5 +1,6 @@
 package xyz.pixelatedw.islands;
 
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
@@ -12,6 +13,7 @@ public class IslandWorldType extends ForgeWorldType
 	public IslandWorldType()
 	{
 		super(new Factory());
+		this.setRegistryName(new ResourceLocation("islands"));
 	}
 
 	private static class Factory implements IBasicChunkGeneratorFactory
@@ -19,7 +21,10 @@ public class IslandWorldType extends ForgeWorldType
 		@Override
 		public ChunkGenerator createChunkGenerator(Registry<Biome> biomeRegistry, Registry<DimensionSettings> dimensionSettingsRegistry, long seed)
 		{
-			return new NoiseChunkGenerator(new IslandBiomeProvider(seed, biomeRegistry), seed, () -> { return dimensionSettingsRegistry.getOrThrow(DimensionSettings.field_242734_c); });
-		}	
+			return new NoiseChunkGenerator(new IslandBiomeProvider(seed, biomeRegistry), seed, () ->
+			{
+				return dimensionSettingsRegistry.getOrThrow(DimensionSettings.field_242734_c);
+			});
+		}
 	}
 }

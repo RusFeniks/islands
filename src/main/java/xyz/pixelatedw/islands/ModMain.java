@@ -21,7 +21,6 @@ public class ModMain
 	public ModMain()
 	{
 		CommonConfig.init();
-		WeightConfig.init();
 
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -34,6 +33,7 @@ public class ModMain
 
 	private void onLoadComplete(FMLLoadCompleteEvent event)
 	{
+		WeightConfig.init();
 		new IslandsHelper();
 	}
 }

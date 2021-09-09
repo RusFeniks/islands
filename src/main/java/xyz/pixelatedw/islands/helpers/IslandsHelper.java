@@ -31,7 +31,7 @@ public class IslandsHelper
 		Predicate<Biome> islandsIgnorePredicate = (biome) -> !bannedIslandBiomes.contains(biome.getRegistryName().toString());
 		for(Biome biome : new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(islandsIgnorePredicate).filter(isNotOceanPredicate).collect(Collectors.toList()))
 		{
-			double weight = WeightConfig.instance().getIslandBiomeWeight(biome.getRegistryName());
+			double weight = WeightConfig.getIslandBiomeWeight(biome.getRegistryName());
 			islandBiomesList.addEntry(biome, weight);
 		}	
 		
@@ -40,7 +40,7 @@ public class IslandsHelper
 		Predicate<Biome> oceanIgnorePredicate = (biome) -> !bannedOceanBiomes.contains(biome.getRegistryName().toString());
 		for(Biome biome : new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(oceanIgnorePredicate).filter(isOceanPredicate).collect(Collectors.toList()))
 		{
-			double weight = WeightConfig.instance().getOceanBiomeWeight(biome.getRegistryName());
+			double weight = WeightConfig.getOceanBiomeWeight(biome.getRegistryName());
 			oceanBiomesList.addEntry(biome, weight);
 		}
 	}

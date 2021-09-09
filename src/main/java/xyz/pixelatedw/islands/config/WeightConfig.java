@@ -1,85 +1,95 @@
 package xyz.pixelatedw.islands.config;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.*;
 
-import org.apache.commons.lang3.tuple.Pair;
+import com.google.gson.Gson;
 
+import com.google.gson.GsonBuilder;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.Category;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.LogManager;
 
 public class WeightConfig
 {
-	private static WeightConfig instance;
-
-	private HashMap<ResourceLocation, IntValue> islandBiomesWeight;
-	private HashMap<ResourceLocation, IntValue> oceanBiomesWeight;
+	private static HashMap<String, Number> biomesWeightList;
 	
 	public static void init()
 	{
-		Pair<WeightConfig, ForgeConfigSpec> pair = new ForgeConfigSpec.Builder().configure(WeightConfig::new);
-		ForgeConfigSpec configSpec = pair.getRight();
-		WeightConfig.instance = pair.getLeft();
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, configSpec, "islands-weights.toml");
-	}
-	
-	public static WeightConfig instance()
-	{
-		return instance;
-	}
+		biomesWeightList = new HashMap<>();
 
-	public WeightConfig(ForgeConfigSpec.Builder builder)
-	{
-		builder.comment("List of biomes and their weights, by default everything is set to 5 with a range of 1 - 10 as integers."
-			+ "\nThe list will also display modded biomes however it will not remove them once said mod is removed! The line(s) for the mod's biomes will not have any effect however"
-			+ "\n\nTIP: Use CTRL+F (Find) to easily find the biome you're looking for")
-		.push("Island Biomes Weights");
+		Gson gson = new GsonBuilder()
+				.setPrettyPrinting()
+				.create();
+
+		String islandWeightsJson = "";
+		File weightConfig = new File("config/islands-weights.json");
+		try
 		{
-			this.islandBiomesWeight = new HashMap<ResourceLocation, IntValue>();
-			Predicate<Biome> isNotOceanPredicate = (biome) -> biome.getCategory() != Category.OCEAN;
-			ArrayList<Biome> list = (ArrayList<Biome>) new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(isNotOceanPredicate).collect(Collectors.toList());
-			for(Biome biome : list)
+			if(!weightConfig.createNewFile())
 			{
-				this.islandBiomesWeight.put(biome.getRegistryName(), builder.defineInRange(biome.getRegistryName().toString(), 5, 1, 10));
+				islandWeightsJson = new String(Files.readAllBytes(weightConfig.toPath()));
 			}
 		}
-		builder.pop();
-		
-		builder.comment("List of biomes and their weights, by default everything is set to 5 with a range of 1 - 10 as integers."
-			+ "\nThe list will also display modded biomes however it will not remove them once said mod is removed! The line(s) for the mod's biomes will not have any effect however"
-			+ "\nTIP: Use CTRL+F (Find) to easily find the biome you're looking for")
-		.push("Ocean Biomes Weights");
+		catch (IOException e)
 		{
-			this.oceanBiomesWeight = new HashMap<ResourceLocation, IntValue>();
-			Predicate<Biome> isOceanPredicate = (biome) -> biome.getCategory() == Category.OCEAN;
-			ArrayList<Biome> list = (ArrayList<Biome>) new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(isOceanPredicate).collect(Collectors.toList());
-			for(Biome biome : list)
-			{
-				this.oceanBiomesWeight.put(biome.getRegistryName(), builder.defineInRange(biome.getRegistryName().toString(), 5, 1, 10));
-			}			
+			LogManager.getLogger().error(e.getMessage());
 		}
-		builder.pop();
+
+		if(!islandWeightsJson.isEmpty())
+		{
+			try
+			{
+				biomesWeightList = gson.fromJson(islandWeightsJson, HashMap.class);
+			}
+			catch (Exception e)
+			{
+				LogManager.getLogger().error(e.getMessage());
+			}
+		}
+
+		for (Biome biome : ForgeRegistries.BIOMES)
+		{
+			if(!biomesWeightList.containsKey(biome.getRegistryName().toString()))
+			{
+				biomesWeightList.put(biome.getRegistryName().toString(), 5);
+			}
+			else
+			{
+				int weight = biomesWeightList.get(biome.getRegistryName().toString()).intValue();
+				if(!(weight > 0 && weight <=10))
+				{
+					weight = 5;
+				}
+				biomesWeightList.put(biome.getRegistryName().toString(), weight);
+			}
+		}
+
+		try {
+			Files.write(weightConfig.toPath(), gson.toJson(biomesWeightList).getBytes(StandardCharsets.UTF_8));
+		} catch (Exception e) {
+			LogManager.getLogger().error(e.getMessage());
+		}
+
 	}
 	
-	public int getIslandBiomeWeight(ResourceLocation key)
+	public static int getIslandBiomeWeight(ResourceLocation key)
 	{
-		if(this.islandBiomesWeight.containsKey(key))
-			return this.islandBiomesWeight.get(key).get();
+		String keyString = key.toString();
+		if(biomesWeightList.containsKey(keyString))
+			return biomesWeightList.get(keyString).intValue();
 		return 5;
 	}
 	
-	public int getOceanBiomeWeight(ResourceLocation key)
+	public static int getOceanBiomeWeight(ResourceLocation key)
 	{
-		if(this.oceanBiomesWeight.containsKey(key))
-			return this.oceanBiomesWeight.get(key).get();
-		return 5;	
+		String keyString = key.toString();
+		if(biomesWeightList.containsKey(keyString))
+			return biomesWeightList.get(keyString).intValue();
+		return 5;
 	}
 }

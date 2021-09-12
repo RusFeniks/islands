@@ -61,7 +61,7 @@ public class WeightConfig
 			else
 			{
 				int weight = biomesWeightList.get(biome.getRegistryName().toString()).intValue();
-				if(!(weight > 0 && weight <=10))
+				if(!(weight >= 0 && weight <=100))
 				{
 					weight = 5;
 				}

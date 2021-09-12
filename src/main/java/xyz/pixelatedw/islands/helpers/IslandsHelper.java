@@ -16,6 +16,7 @@ import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.INoiseRandom;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
+import org.apache.logging.log4j.LogManager;
 import xyz.pixelatedw.islands.config.CommonConfig;
 import xyz.pixelatedw.islands.config.WeightConfig;
 
@@ -26,14 +27,15 @@ public class IslandsHelper
 
 	public IslandsHelper()
 	{
-		List<String> bannedIslandBiomes = CommonConfig.instance().getBannedIslandsBiomes();	
+		List<String> bannedIslandBiomes = CommonConfig.instance().getBannedIslandsBiomes();
 		Predicate<Biome> isNotOceanPredicate = (biome) -> biome.getCategory() != Category.OCEAN;
 		Predicate<Biome> islandsIgnorePredicate = (biome) -> !bannedIslandBiomes.contains(biome.getRegistryName().toString());
 		for(Biome biome : new ArrayList<Biome>(ForgeRegistries.BIOMES.getValues()).stream().filter(islandsIgnorePredicate).filter(isNotOceanPredicate).collect(Collectors.toList()))
 		{
 			double weight = WeightConfig.getIslandBiomeWeight(biome.getRegistryName());
 			islandBiomesList.addEntry(biome, weight);
-		}	
+			LogManager.getLogger().error("ISLAND BIOME: "+biome.getRegistryName().toString());
+		}
 		
 		List<String> bannedOceanBiomes = CommonConfig.instance().getBannedOceanBiomes();
 		Predicate<Biome> isOceanPredicate = (biome) -> biome.getCategory() == Category.OCEAN;
@@ -42,6 +44,7 @@ public class IslandsHelper
 		{
 			double weight = WeightConfig.getOceanBiomeWeight(biome.getRegistryName());
 			oceanBiomesList.addEntry(biome, weight);
+			LogManager.getLogger().error("OCEAN BIOME: "+biome.getRegistryName().toString());
 		}
 	}
 	

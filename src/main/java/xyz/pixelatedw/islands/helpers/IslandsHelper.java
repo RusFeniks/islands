@@ -34,7 +34,7 @@ public class IslandsHelper
 		{
 			double weight = WeightConfig.getIslandBiomeWeight(biome.getRegistryName());
 			islandBiomesList.addEntry(biome, weight);
-			LogManager.getLogger().error("ISLAND BIOME: "+biome.getRegistryName().toString());
+			LogManager.getLogger().debug("ISLAND BIOME: "+biome.getRegistryName().toString());
 		}
 		
 		List<String> bannedOceanBiomes = CommonConfig.instance().getBannedOceanBiomes();
@@ -44,7 +44,7 @@ public class IslandsHelper
 		{
 			double weight = WeightConfig.getOceanBiomeWeight(biome.getRegistryName());
 			oceanBiomesList.addEntry(biome, weight);
-			LogManager.getLogger().error("OCEAN BIOME: "+biome.getRegistryName().toString());
+			LogManager.getLogger().debug("OCEAN BIOME: "+biome.getRegistryName().toString());
 		}
 	}
 	
